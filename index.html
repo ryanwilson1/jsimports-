@@ -215,6 +215,21 @@ h1{animation-delay:.3s}
 /* luz interna da esfera muda junto com o movimento */
 .orb-i .hi{transform-box:fill-box;transform-origin:50% 50%;animation:hi 9s ease-in-out infinite}
 .orb-i .bd{animation:band 13s ease-in-out infinite}
+/* monograma gravado na superficie da esfera */
+.mk text{
+  font-family:'Sora',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:47px;font-weight:600;letter-spacing:-2px;text-anchor:middle;
+}
+.mk-in{fill:#05070A;opacity:.5}            /* sombra interna do sulco */
+.mk-up{fill:#FFFFFF;opacity:.22}           /* aresta superior iluminada */
+.mk-fc{fill:url(#mkg);opacity:.5}          /* face metalica */
+/* a luz da esfera passa pelo monograma no mesmo ciclo do reflexo */
+.mk{animation:mkLight 9s ease-in-out infinite}
+@keyframes mkLight{
+  0%{opacity:.82}
+  50%{opacity:1}
+  100%{opacity:.82}
+}
 .orb svg{display:block;width:100%;height:100%}
 .orb-wrap::after{
   content:'';position:absolute;left:50%;bottom:-24px;
@@ -510,6 +525,7 @@ footer{margin-top:54px;text-align:center}
   .bg b{opacity:.32}
   .bg .sheen,.bg .grain{display:none}
   .bg .halo{animation:none;opacity:.55;transform:none}
+  .mk{animation:none;opacity:.92}
   .orb-wrap{transition:none}
   .bg .spot{transition:none}
 }
@@ -558,6 +574,12 @@ footer{margin-top:54px;text-align:center}
             <stop offset="50%" stop-color="#fff" stop-opacity=".5"/>
             <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
           </linearGradient>
+          <linearGradient id="mkg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="46%" stop-color="#E4E8EE"/>
+            <stop offset="100%" stop-color="#8E959F"/>
+          </linearGradient>
+          <clipPath id="ball"><circle cx="80" cy="80" r="62"/></clipPath>
           <radialGradient id="spec" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#fff" stop-opacity=".9"/>
             <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
@@ -566,6 +588,11 @@ footer{margin-top:54px;text-align:center}
         <circle cx="80" cy="80" r="62" fill="url(#body)"/>
         <circle cx="80" cy="80" r="62" fill="none" stroke="url(#rim)" stroke-width="1.1"/>
         <ellipse class="bd" cx="80" cy="60" rx="52" ry="12" fill="url(#band)" opacity=".5"/>
+        <g class="mk" clip-path="url(#ball)" aria-hidden="true">
+          <text class="mk-in"  x="80.9" y="97.1">JS</text>
+          <text class="mk-up"  x="79.2" y="95.1">JS</text>
+          <text class="mk-fc"  x="80"   y="96">JS</text>
+        </g>
         <ellipse class="hi" cx="62" cy="54" rx="20" ry="13" fill="url(#spec)" transform="rotate(-24 62 54)"/>
         <path d="M22 96a62 62 0 0 0 116-16" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/>
         <circle cx="80" cy="80" r="74" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="1"/>
